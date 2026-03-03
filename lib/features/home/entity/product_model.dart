@@ -39,11 +39,12 @@ class ProductItem {
   final Map<String, dynamic> details;
 
   factory ProductItem.fromJson(Map<String, dynamic> json) {
+    final rawImage = '${json['imageurl'] ?? ''}'.trim();
     return ProductItem(
       tfvname: '${json['tfvname'] ?? ''}',
       botname: '${json['botname'] ?? ''}',
       othname: '${json['othname'] ?? ''}',
-      imageurl: '${json['imageurl'] ?? ''}',
+      imageurl: _normalizeImageUrl(rawImage),
       details: Map<String, dynamic>.from(json),
     );
   }
@@ -55,6 +56,19 @@ class ProductItem {
     map['othname'] = othname;
     map['imageurl'] = imageurl;
     return map;
+  }
+
+  static String _normalizeImageUrl(String url) {
+    if (url.isEmpty) {
+      return '';
+    }
+    if (url.startsWith('//')) {
+      return 'https:$url';
+    }
+    if (url.startsWith('http://')) {
+      return 'https://${url.substring(7)}';
+    }
+    return url;
   }
 }
 

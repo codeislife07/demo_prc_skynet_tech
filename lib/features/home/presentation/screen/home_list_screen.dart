@@ -4,6 +4,7 @@ import 'package:demo_prc_skynet_tech/features/home/data/repositories/home_reposi
 import 'package:demo_prc_skynet_tech/features/home/entity/product_model.dart';
 import 'package:demo_prc_skynet_tech/features/home/presentation/bloc/home_bloc.dart';
 import 'package:demo_prc_skynet_tech/features/home/presentation/screen/product_details_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -116,6 +117,7 @@ class _ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageAspect = isGrid ? 16 / 10 : 16 / 9;
+    final imageUrl = (item.imageurl);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -132,7 +134,7 @@ class _ProductCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: imageAspect,
-              child: item.imageurl.isEmpty
+              child: imageUrl.isEmpty
                   ? const ColoredBox(
                       color: Color(0xFFE6E8FF),
                       child: Center(
@@ -140,10 +142,10 @@ class _ProductCard extends StatelessWidget {
                       ),
                     )
                   : Image.network(
-                      item.imageurl,
+                      imageUrl,
                       width: double.infinity,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, error, stackTrace) => const ColoredBox(
+                      errorBuilder: (_, error, stackTrace) => ColoredBox(
                         color: Color(0xFFE6E8FF),
                         child: Center(
                           child: Icon(Icons.broken_image, size: 40),

@@ -8,9 +8,10 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final headerImageUrl = (product.imageurl);
     final entries = product.details.entries.where((entry) {
       final value = entry.value?.toString().trim() ?? '';
-      return value.isNotEmpty;
+      return value.isNotEmpty && entry.key != 'imageurl';
     }).toList()..sort((a, b) => a.key.compareTo(b.key));
 
     return Scaffold(
@@ -59,12 +60,12 @@ class ProductDetailsScreen extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
                     color: const Color(0xFFE6E8FF),
-                    child: product.imageurl.isEmpty
+                    child: headerImageUrl.isEmpty
                         ? const Center(
                             child: Icon(Icons.image_not_supported, size: 64),
                           )
                         : Image.network(
-                            product.imageurl,
+                            headerImageUrl,
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,
@@ -92,48 +93,44 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 16),
                           ...entries.map(
-                            (entry) => (entry.key == "imageurl")
-                                ? Container()
-                                : Padding(
-                                    padding: const EdgeInsets.only(bottom: 10),
-                                    child: isMobile
-                                        ? Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                _formatKey(entry.key),
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(entry.value.toString()),
-                                            ],
-                                          )
-                                        : Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                flex: 2,
-                                                child: Text(
-                                                  _formatKey(entry.key),
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Expanded(
-                                                flex: 4,
-                                                child: Text(
-                                                  entry.value.toString(),
-                                                ),
-                                              ),
-                                            ],
+                            (entry) => Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: isMobile
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _formatKey(entry.key),
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
                                           ),
-                                  ),
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(entry.value.toString()),
+                                      ],
+                                    )
+                                  : Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(
+                                            _formatKey(entry.key),
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          flex: 4,
+                                          child: Text(entry.value.toString()),
+                                        ),
+                                      ],
+                                    ),
+                            ),
                           ),
                         ],
                       ),
