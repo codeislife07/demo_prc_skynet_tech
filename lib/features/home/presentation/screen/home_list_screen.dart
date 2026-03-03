@@ -4,7 +4,6 @@ import 'package:demo_prc_skynet_tech/features/home/data/repositories/home_reposi
 import 'package:demo_prc_skynet_tech/features/home/entity/product_model.dart';
 import 'package:demo_prc_skynet_tech/features/home/presentation/bloc/home_bloc.dart';
 import 'package:demo_prc_skynet_tech/features/home/presentation/screen/product_details_screen.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -145,6 +144,7 @@ class _ProductCard extends StatelessWidget {
                       imageUrl,
                       width: double.infinity,
                       fit: BoxFit.cover,
+                      webHtmlElementStrategy: WebHtmlElementStrategy.prefer,
                       errorBuilder: (_, error, stackTrace) => ColoredBox(
                         color: Color(0xFFE6E8FF),
                         child: Center(

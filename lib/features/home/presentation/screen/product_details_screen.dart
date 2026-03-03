@@ -69,6 +69,8 @@ class ProductDetailsScreen extends StatelessWidget {
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,
+                            webHtmlElementStrategy:
+                                WebHtmlElementStrategy.prefer,
                             errorBuilder: (_, error, stackTrace) =>
                                 const Center(
                                   child: Icon(Icons.broken_image, size: 64),
